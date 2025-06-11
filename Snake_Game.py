@@ -83,5 +83,6 @@ def play_game():
 
         player = 1 - player  # switch turn
 
-if __name__ == "__main__":
-    play_game()
+
+play_game()
+print('done')
