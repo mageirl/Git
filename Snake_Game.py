@@ -62,6 +62,18 @@ def display_board(positions, width, height):
         print(line)
         print("-" * (width * 7 + 1))
 
+def get_int_input(prompt, min_value=None, max_value=None):
+    while True:
+        try:
+            value = int(input(prompt))
+            if (min_value is not None and value < min_value) or \
+               (max_value is not None and value > max_value):
+                print(f"Please enter a value between {min_value} and {max_value}.")
+                continue
+            return value
+        except ValueError:
+            print("Invalid input. Please enter a whole number.")
+
 def play_game():
     print("Welcome to Custom Snakes and Ladders!")
     if input('Do you want to play on a preset board? (type "yes" or anything else if you dont want to)') == 'yes':
@@ -95,12 +107,14 @@ def play_game():
         }
 
     else:
-        width = int(input("Enter board width (e.g., 10): "))
-        height = int(input("Enter board height (e.g., 10): "))
+        width = get_int_input("Enter board width (5+): ", min_value=5, max_value=20)
+        height = get_int_input("Enter board height (5+): ", min_value=5, max_value=20)
         max_pos = width * height
 
-        num_snakes = int(input("Number of snakes (e.g., 8): "))
-        num_ladders = int(input("Number of ladders (e.g., 8): "))
+        max_elements = max_pos // 2
+
+        num_snakes = get_int_input(f"Number of snakes (0 to {max_elements}): ", min_value=0, max_value=max_elements)
+        num_ladders = get_int_input(f"Number of ladders (0 to {max_elements}): ", min_value=0, max_value=max_elements)
 
         snakes, ladders = generate_random_board(width, height, num_snakes, num_ladders)
 
